@@ -13,26 +13,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** 2) Add the clustering stage to the workflow
- * 
- * This second stage of the workflow aims to divide the sequences into genes 
- * (some genes are highly conserved within the same genus and can be used to find those sequences of dubious quality).
- *
-**/
-
 nextflow.enable.dsl = 2
-process GET_GENES {
-    debug true
 
-    input:
-    path genes
-    val name
-   
-    output:
-    path "${name}.log"
-    
-    shell:
-    """
-    get_genes -i "$genes" -n "$name"
-    """
+// Import modules/subworkflows
+include { FETCH_SEQS } from './fetch_seqs.nf'
+include { GET_GENES } from './get_genes.nf'
+
+if (params.name == null){
+    print("Please, insert the file name")
+    exit(1)
+}
+
+workflow {
+    genes = FETCH_SEQS(params.query, params.name)
+    GET_GENES(genes, params.name)
 }

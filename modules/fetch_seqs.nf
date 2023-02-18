@@ -25,14 +25,19 @@
  * Finally, all the information can be saved in a file with the SeqRecord objects in a GENBANK format
 **/
 
+nextflow.enable.dsl = 2
 process FETCH_SEQS {
     debug true
+    
+    input:
+    val query
+    val name
 
     output:
-    path 'ejemplo.gb'
-
-    script:
+    path "${name}.gb"
+    
+    shell:
     """
-    fetch_genbank_seqs
+    fetch_genbank_seqs -q "$query" -n "$name"
     """
 }
