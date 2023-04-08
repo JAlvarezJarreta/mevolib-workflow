@@ -45,8 +45,8 @@ process FETCH_SEQS {
 
 workflow {
     if (params.name == null){
-    print("Please, insert the file name to fetch")
-    exit(1)
+        print("Please, insert the file name to fetch")
+        exit(1)
     }
 
     //Completed query
@@ -54,14 +54,13 @@ workflow {
         print("Please, insert either the query or the specie")
         exit(1)
     }
-
+    //Query or species needed
     else if(params.query == null && params.species == null){
         print("Please, insert the query or the specie")
         exit(1)
     }
     //Species of the query (mandatory)
     else if(params.query == null && params.species != null) {
-        
         total_query = "(\"${params.species}\"[Organism] OR ${params.species}[All Fields])"
 
         //Sequence type of the query (optional)
@@ -74,6 +73,8 @@ workflow {
             total_query += " AND ${params.ref_seq}[filter]"
         }
     }
+    //Example of a completed query: 
+    //  '(\"${Ixodes}\"[Organism] OR ${ixodes}[All Fields]) AND (biomol_genomic[PROP] AND refseq[filter])'
     else if(params.query != null && params.species == null) {
         total_query = params.query
     }

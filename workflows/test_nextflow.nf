@@ -16,17 +16,17 @@
 nextflow.enable.dsl = 2
 
 // Import modules/subworkflows
-include { FETCH_SEQS } from './fetch_seqs.nf'
-include { GET_GENES } from './get_genes.nf'
-include { GET_ALIGN } from './get_align.nf'
+include { FETCH_SEQS } from '../modules/fetch_seqs.nf'
+include { GET_GENES } from '../modules/get_genes.nf'
+include { GET_ALIGN } from '../modules/get_align.nf'
 
-//Name of the outpu file
+//Name of the output file
 if (params.name == null){
     print("Please, insert the file name")
     exit(1)
 }
 
-//Completed query
+//Query or species needed
 if(params.query != null && params.species != null){
     print("Please, insert either the query or the specie")
     exit(1)
@@ -38,7 +38,6 @@ else if(params.query == null && params.species == null){
 }
 //Species of the query (mandatory)
 else if(params.query == null && params.species != null) {
-    // params.query = '(\"${params.query}\"[Organism] OR ${params.query}[All Fields]) AND (biomol_genomic[PROP] AND refseq[filter])'
     total_query = "(\"${params.species}\"[Organism] OR ${params.species}[All Fields])"
 
     //Sequence type of the query (optional)
@@ -51,24 +50,19 @@ else if(params.query == null && params.species != null) {
         total_query += " AND ${params.ref_seq}[filter]"
     }
 }
+//Example of a completed query: 
+//  '(\"${Ixodes}\"[Organism] OR ${ixodes}[All Fields]) AND (biomol_genomic[PROP] AND refseq[filter])'
 else if(params.query != null && params.species == null) {
     total_query = params.query
 }
 
-//Arguments for Align
+// //Arguments for Align
 if(params.tool == null){
     params.tool = 'mafft'
-}
-
-//File Format = .log
-if(params.fileformat == null){
-    print("Please, insert the unaligned file format")
-    exit(1)
 }
 
 workflow {
     genes = FETCH_SEQS(total_query, params.name)
     file = GET_GENES(genes, params.name)
-    GET_ALIGN(params.tool, file, params.fileformat)
+    GET_ALIGN(params.tool, file, params.name)
 }
-

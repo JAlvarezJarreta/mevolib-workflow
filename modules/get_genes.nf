@@ -30,7 +30,7 @@ process GET_GENES {
    val name
  
    output:
-   path "${name}.log"
+   path "${name}.fasta"
    
    shell:
    """

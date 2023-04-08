@@ -29,11 +29,14 @@ process GET_ALIGN {
     input:
     val tool
     path file
-    val fileformat
+    val name
+    
+    output:
+    path "${name}.fasta"
     
     shell:
     """
-    get_align -t "$tool" -i "$file" -f "$fileformat" 
+    get_align -t "$tool" -i "$file" -n "$name" 
     """
 }
 
@@ -49,14 +52,11 @@ workflow {
         exit(1)
     }
 
-    if(params.fileformat == null){
-        print("Please, insert the unaligned file format")
+    if(params.name == null){
+        print("Please, insert the name of the output file")
         exit(1)
     }
 
     read_pairs_ch = channel.fromFilePairs(params.file, checkIfExists: true )
-    GET_ALIGN(params.tool, params.file, params.fileformat)
+    GET_ALIGN(params.tool, params.file, params.name)
 }
-
-// mafft --anysymbol input > output   Este comando nos funciona en el terminal
-// el file format es .log
