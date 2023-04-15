@@ -24,7 +24,6 @@
 nextflow.enable.dsl = 2
 
 process GET_ALIGN {
-    //debug true
 
     input:
     val tool
