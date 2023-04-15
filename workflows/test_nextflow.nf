@@ -56,7 +56,7 @@ else if(params.query != null && params.species == null) {
     total_query = params.query
 }
 
-// //Arguments for Align
+// Arguments for alignment process
 if(params.tool == null){
     params.tool = 'mafft'
 }
