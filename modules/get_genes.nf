@@ -23,7 +23,6 @@
 nextflow.enable.dsl = 2
 
 process GET_GENES {
-   // debug true
 
    input:
    path genes
