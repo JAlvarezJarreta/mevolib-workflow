@@ -29,11 +29,11 @@ process GET_GENES {
    val name
  
    output:
-   path "${name}.fasta"
+   path "*.fasta"
    
    shell:
    """
-   get_genes -i "$genes" -n "$name"
+   get_genes -i "$genes" -o "$name"
    """
 }
 

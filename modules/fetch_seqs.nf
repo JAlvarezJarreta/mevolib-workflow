@@ -39,7 +39,7 @@ process FETCH_SEQS {
 
     shell:
     """
-    fetch_genbank_seqs -q "$total_query" -n "$name"
+    fetch_genbank_seqs -q "$total_query" -o "$name"
     """
 }
 
@@ -49,34 +49,28 @@ workflow {
         exit(1)
     }
 
-    //Completed query
-    if(params.query != null && params.species != null){
-        print("Please, insert either the query or the specie")
-        exit(1)
-    }
-    //Query or species needed
-    else if(params.query == null && params.species == null){
-        print("Please, insert the query or the specie")
-        exit(1)
-    }
-    //Species of the query (mandatory)
-    else if(params.query == null && params.species != null) {
-        total_query = "(\"${params.species}\"[Organism] OR ${params.species}[All Fields])"
-
-        //Sequence type of the query (optional)
-        if(params.seq_type != null){
-            total_query += " AND ${params.seq_type}[PROP]"
+   if (params.query == null) {
+        if (params.species == null) {
+            print("Please, insert either the query or the species")
+            exit(1)
+        } else {
+            total_query = "(\"${params.species}\"[Organism] OR ${params.species}[All Fields])"
+            // Add the sequence type of the query (if provided)
+            if(params.seq_type != null){
+                total_query += " AND ${params.seq_type}[PROP]"
+            }
+            // Add the reference sequence of the query (if provided)
+            if(params.ref_seq != null){
+                total_query += " AND ${params.ref_seq}[filter]"
+            }
         }
-
-        //Reference sequence of the query (optional)
-        if(params.ref_seq != null){
-            total_query += " AND ${params.ref_seq}[filter]"
+    } else {
+        if (params.species == null) {
+            total_query = params.query
+        } else {
+            print("Please, insert either the query or the species, but not both")
+            exit(1)
         }
-    }
-    //Example of a completed query: 
-    //  '(\"${Ixodes}\"[Organism] OR ${ixodes}[All Fields]) AND (biomol_genomic[PROP] AND refseq[filter])'
-    else if(params.query != null && params.species == null) {
-        total_query = params.query
     }
     
     genes = FETCH_SEQS(total_query, params.name)

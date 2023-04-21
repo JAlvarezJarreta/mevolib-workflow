@@ -35,7 +35,7 @@ process GET_ALIGN {
     
     shell:
     """
-    get_align -t "$tool" -i "$file" -n "$name" 
+    get_align -t "$tool" -i "$file" -o "$name" 
     """
 }
 
@@ -43,7 +43,7 @@ process GET_ALIGN {
 workflow {
 
     if(params.tool == null){
-        params.tool = 'mafft'
+        params.tool = "mafft"
     }
 
     if(params.file == null){
