@@ -35,7 +35,7 @@ process FETCH_SEQS {
     val name
 
     output:
-    path "${name}.gb"
+    path "${name}.gb", emit: gb_gile
 
     shell:
     """

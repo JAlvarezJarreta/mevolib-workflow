@@ -29,7 +29,7 @@ process GET_GENES {
    val name
  
    output:
-   path "*.fasta"
+   path '*.fasta', emit: gene_files
    
    shell:
    """

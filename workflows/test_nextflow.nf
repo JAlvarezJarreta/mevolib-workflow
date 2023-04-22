@@ -51,14 +51,18 @@ if (params.query == null) {
 }
 
 // Arguments for alignment process
-if(params.tool == null){
-    tool = "mafft"
-} else{
-    tool = params.tool
-}
+// if(params.tool == null){
+//     tool = "mafft"
+// } else{
+//     tool = params.tool
+// }
 
 workflow {
-    genes = FETCH_SEQS(total_query, params.name)
-    file = GET_GENES(genes, params.name)
-    GET_ALIGN(tool, file, params.name)
+    // genes = FETCH_SEQS(total_query, params.name)
+    FETCH_SEQS(total_query, params.name)
+    // file = GET_GENES(genes, params.name)
+    GET_GENES(FETCH_SEQS.out.gb_gile, params.name)
+    // GET_ALIGN(tool, file.flatten, params.name)
+    GET_GENES.out.gene_files.view()
+    GET_ALIGN(GET_GENES.out.gene_files)
 }
