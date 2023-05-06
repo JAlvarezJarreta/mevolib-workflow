@@ -31,7 +31,7 @@ if (params.query == null) {
         print("Please, insert either the query or the species")
         exit(1)
     } else {
-        total_query = "(\"${params.species}\"[Organism] OR ${params.species}[All Fields])"
+        total_query = "(\"${params.species}\"[Organism]"
         // Add the sequence type of the query (if provided)
         if(params.seq_type != null){
             total_query += " AND ${params.seq_type}[PROP]"
@@ -50,19 +50,8 @@ if (params.query == null) {
     }
 }
 
-// Arguments for alignment process
-// if(params.tool == null){
-//     tool = "mafft"
-// } else{
-//     tool = params.tool
-// }
-
 workflow {
-    // genes = FETCH_SEQS(total_query, params.name)
     FETCH_SEQS(total_query, params.name)
-    // file = GET_GENES(genes, params.name)
-    GET_GENES(FETCH_SEQS.out.gb_gile, params.name)
-    // GET_ALIGN(tool, file.flatten, params.name)
-    GET_GENES.out.gene_files.view()
-    GET_ALIGN(GET_GENES.out.gene_files)
+    files = GET_GENES(FETCH_SEQS.out, params.name).flatten()
+    GET_ALIGN(files)
 }

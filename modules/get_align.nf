@@ -26,13 +26,11 @@ nextflow.enable.dsl = 2
 process GET_ALIGN {
 
     input:
-    // val tool
     path fasta
-    // val name
        
     shell:
     """
-    get_align -t "${params.tool}" -i "$fasta" -o "${params.name}" 
+    get_align -t "${params.tool}" -i "$fasta"
     """
 }
 
