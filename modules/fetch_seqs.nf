@@ -28,7 +28,6 @@
 nextflow.enable.dsl = 2
 
 process FETCH_SEQS {
-    // debug true
 
     input:
     val total_query
