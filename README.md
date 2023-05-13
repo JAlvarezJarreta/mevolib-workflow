@@ -15,6 +15,6 @@ nextflow run test_fetch_cluster.nf --name example
 ```
 The Query used in this example is: 
 ```bash
-(Ixodes [Organism] OR ixodes[All Fields]) AND biomol_genomic[PROP] AND refseq[filter]
+Ixodes[Organism] AND biomol_genomic[PROP] AND refseq[filter]
 ```
 
