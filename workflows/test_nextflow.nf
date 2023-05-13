@@ -21,7 +21,7 @@ include { GET_GENES } from '../modules/get_genes.nf'
 include { GET_ALIGN } from '../modules/get_align.nf'
 
 //Name of the output file
-if (params.name == null){
+if (params.name == null) {
     print("Please, insert the file name")
     exit(1)
 }
