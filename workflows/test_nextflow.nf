@@ -53,5 +53,5 @@ if (params.query == null) {
 workflow {
     FETCH_SEQS(total_query, params.name)
     files = GET_GENES(FETCH_SEQS.out, params.name).flatten()
-    GET_ALIGN(files)
+    GET_ALIGN(files, params.name)
 }

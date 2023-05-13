@@ -24,30 +24,27 @@
 nextflow.enable.dsl = 2
 
 process GET_ALIGN {
-
+    
+    publishDir "./data/${name}/align", mode: 'copy', overwrite: false
+    
     input:
     path fasta
+    val name
+
+    output:
+    path '*_align.fasta'
        
     shell:
     """
-    get_align -t "${params.tool}" -i "$fasta"
+    get_align -t "${params.tool}" -i "$fasta" -o "$name"
     """
 }
 
 
 workflow {
 
-    if(params.tool == null){
-        params.tool = "mafft"
-    }
-
-    if(params.file == null){
+    if (params.file == null) {
         print("Please, insert the unaligned file")
-        exit(1)
-    }
-
-    if(params.name == null){
-        print("Please, insert the name of the output file")
         exit(1)
     }
 

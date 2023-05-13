@@ -23,7 +23,9 @@
 nextflow.enable.dsl = 2
 
 process GET_GENES {
-
+   
+   publishDir "./data/${name}/cluster", mode: 'copy', overwrite: false
+   
    input:
    path genes
    val name
@@ -38,12 +40,12 @@ process GET_GENES {
 }
 
 workflow {
-   if (params.name == null){
+   if (params.name == null) {
       print("Please, insert the output file name to cluster")
       exit(1)
    }
 
-   if(params.genes == null){
+   if (params.genes == null) {
       print("Please, insert the file name")
       exit(1)
    }

@@ -29,6 +29,8 @@ nextflow.enable.dsl = 2
 
 process FETCH_SEQS {
 
+    publishDir "./data/${name}/fetch", mode: 'copy', overwrite: false
+
     input:
     val total_query
     val name
@@ -43,7 +45,7 @@ process FETCH_SEQS {
 }
 
 workflow {
-    if (params.name == null){
+    if (params.name == null) {
         print("Please, insert the file name to fetch")
         exit(1)
     }
@@ -55,11 +57,11 @@ workflow {
         } else {
             total_query = "(\"${params.species}\"[Organism] OR ${params.species}[All Fields])"
             // Add the sequence type of the query (if provided)
-            if(params.seq_type != null){
+            if (params.seq_type != null) {
                 total_query += " AND ${params.seq_type}[PROP]"
             }
             // Add the reference sequence of the query (if provided)
-            if(params.ref_seq != null){
+            if (params.ref_seq != null) {
                 total_query += " AND ${params.ref_seq}[filter]"
             }
         }
