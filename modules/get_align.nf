@@ -51,6 +51,6 @@ workflow {
         exit(1)
     }
 
-    read_pairs_ch = channel.fromFilePairs(params.file, checkIfExists: true )
+    read_pairs_ch = channel.fromFilePairs(params.file, checkIfExists: true)
     GET_ALIGN(params.tool, params.file, params.name)
 }
