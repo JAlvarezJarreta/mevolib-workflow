@@ -33,7 +33,7 @@ if (params.query == null) {
     } else {
         total_query = "\"${params.species}\"[Organism]"
         // Add the sequence type of the query (if provided)
-        if(params.seq_type != null){
+        if (params.seq_type != null) {
             total_query += " AND ${params.seq_type}[PROP]"
         }
         // Add the reference sequence of the query (if provided)
