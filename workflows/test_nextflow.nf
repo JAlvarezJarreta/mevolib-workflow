@@ -31,7 +31,7 @@ if (params.query == null) {
         print("Please, insert either the query or the species")
         exit(1)
     } else {
-        total_query = "(\"${params.species}\"[Organism]"
+        total_query = "\"${params.species}\"[Organism]"
         // Add the sequence type of the query (if provided)
         if(params.seq_type != null){
             total_query += " AND ${params.seq_type}[PROP]"
