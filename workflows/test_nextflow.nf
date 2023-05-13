@@ -37,7 +37,7 @@ if (params.query == null) {
             total_query += " AND ${params.seq_type}[PROP]"
         }
         // Add the reference sequence of the query (if provided)
-        if(params.ref_seq != null){
+        if (params.ref_seq != null) {
             total_query += " AND ${params.ref_seq}[filter]"
         }
     }
