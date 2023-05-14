@@ -25,14 +25,54 @@
  * Finally, all the information can be saved in a file with the SeqRecord objects in a GENBANK format
 **/
 
+nextflow.enable.dsl = 2
+
 process FETCH_SEQS {
-    debug true
+
+    publishDir "./data/${name}/fetch", mode: 'copy', overwrite: false
+
+    input:
+    val total_query
+    val name
 
     output:
-    path 'ejemplo.gb'
+    path "${name}.gb"
 
-    script:
+    shell:
     """
-    fetch_genbank_seqs
+    fetch_genbank_seqs -q "$total_query" -o "$name"
     """
+}
+
+workflow {
+    if (params.name == null) {
+        print("Please, insert the file name to fetch")
+        exit(1)
+    }
+
+   if (params.query == null) {
+        if (params.species == null) {
+            print("Please, insert either the query or the species")
+            exit(1)
+        } else {
+            total_query = "(\"${params.species}\"[Organism] OR ${params.species}[All Fields])"
+            // Add the sequence type of the query (if provided)
+            if (params.seq_type != null) {
+                total_query += " AND ${params.seq_type}[PROP]"
+            }
+            // Add the reference sequence of the query (if provided)
+            if (params.ref_seq != null) {
+                total_query += " AND ${params.ref_seq}[filter]"
+            }
+        }
+    } else {
+        if (params.species == null) {
+            total_query = params.query
+        } else {
+            print("Please, insert either the query or the species, but not both")
+            exit(1)
+        }
+    }
+    
+    genes = FETCH_SEQS(total_query, params.name)
 }

@@ -20,17 +20,36 @@
  *
 **/
 
+nextflow.enable.dsl = 2
+
 process GET_GENES {
-    debug true
+   
+   publishDir "./data/${name}/cluster", mode: 'copy', overwrite: false
+   
+   input:
+   path genes
+   val name
+ 
+   output:
+   path '*.fasta'
+   
+   shell:
+   """
+   get_genes -i "$genes" -o "$name"
+   """
+}
 
-    input:
-    path genes
+workflow {
+   if (params.name == null) {
+      print("Please, insert the output file name to cluster")
+      exit(1)
+   }
 
-    output:
-    path 'ejemplo.log'
-    
-    script:
-    """
-    get_genes -i $genes
-    """
+   if (params.genes == null) {
+      print("Please, insert the file name")
+      exit(1)
+   }
+   
+   read_pairs_ch = channel.fromFilePairs(params.genes, checkIfExists: true )
+   GET_GENES(params.genes, params.name)
 }
