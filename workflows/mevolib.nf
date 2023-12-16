@@ -13,13 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-nextflow.enable.dsl = 2
-
-// Import modules/subworkflows
-include { FETCH_SEQS } from '../modules/fetch_seqs.nf'
-include { GET_GENES } from '../modules/get_genes.nf'
-include { GET_ALIGN } from '../modules/get_align.nf'
-
 //Name of the output file
 if (params.name == null) {
     print("Please, insert the file name")
@@ -50,7 +43,13 @@ if (params.query == null) {
     }
 }
 
-workflow {
+// Import modules/subworkflows
+include { FETCH_FROM_GENBANK } from '../modules/fetch_seqs.nf'
+include { CLUSTER_GENES } from '../modules/get_genes.nf'
+include { ALIGNMENT } from '../modules/get_align.nf'
+
+// Named workflow for pipeline
+workflow MEVOLIB {
     FETCH_SEQS(total_query, params.name)
     files = GET_GENES(FETCH_SEQS.out, params.name).flatten()
     GET_ALIGN(files, params.name)

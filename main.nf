@@ -13,20 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-nextflow.enable.dsl = 2
+include { MEVOLIB } from './workflows/mevolib'
 
-params {
-    query = null
-    name = null
-    
-    species = null
-    seq_type = null
-    ref_seq = null
 
-    genes = null
-
-    tool = 'mafft'
-    file = null
+workflow {
+    MEVOLIB()
 }
-
-
