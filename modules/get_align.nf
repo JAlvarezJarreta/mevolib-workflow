@@ -14,17 +14,18 @@
 // limitations under the License.
 
 process GET_ALIGN {
-    tag "$fasta"
-    publishDir "./data/${params.output_name}/align", mode: 'copy', overwrite: false
+    tag "$file_path"
+    publishDir "${params.output_dir}/alignments", mode: 'copy', overwrite: true
 
     input:
-        path fasta
+        tuple path(file_path), val(file_format)
 
     output:
-        path '*_align.fasta'
+        tuple path("*_aligned.${params.align_out_format}"), val("${params.align_out_format}")
 
     shell:
         '''
-        get_align -t !{params.tools.align} -i !{fasta} -o !{params.output_name}
+        get_align -t !{params.align_tool} -i !{file_path} --informat !{file_format} \
+            --outformat !{params.align_out_format}
         '''
 }

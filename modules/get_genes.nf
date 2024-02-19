@@ -14,17 +14,17 @@
 // limitations under the License.
 
 process GET_GENES {
-    tag "$fasta"
-    publishDir "./data/${params.output_name}/cluster", mode: 'copy', overwrite: false
+    tag "$file_path"
+    publishDir "${params.output_dir}/cluster", mode: 'copy', overwrite: false
 
     input:
-        path fasta
+        tuple path(file_path), val(file_format)
 
     output:
-        path '*.fasta'
+        tuple path('*.fasta'), val('fasta')
 
     shell:
         '''
-        get_genes -i !{fasta} -o !{params.output_name}
+        get_genes -i !{file_path} --format !{file_format} -o ./
         '''
 }

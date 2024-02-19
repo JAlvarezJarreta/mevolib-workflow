@@ -1,0 +1,128 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "https://github.com/JAlvarezJarreta/movelib-workflow/main/nextflow_schema.json",
+    "title": "MEvoLib pipeline parameters",
+    "type": "object",
+    "definitions": {
+        "fetch_options": {
+            "title": "Sequence fetching options",
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "description": "NCBI Entrez query."
+                },
+                "species": {
+                    "type": "string",
+                    "description": "Species to fetch sequences for."
+                },
+                "seq_type": {
+                    "type": "string",
+                    "description": "Sequence type."
+                },
+                "refseq": {
+                    "type": "boolean",
+                    "description": "Fetch only reference sequences.",
+                    "default": false
+                }
+            }
+        },
+        "cluster_options": {
+            "title": "Clustering options",
+            "type": "object",
+            "properties": {
+                "cluster_tool": {
+                    "type": "string",
+                    "description": "Clustering tool.",
+                    "enum": ["genes"]
+                }
+            }
+        },
+        "align_options": {
+            "title": "Multiple sequence alignment (MSA) options",
+            "type": "object",
+            "properties": {
+                "align_tool": {
+                    "type": "string",
+                    "description": "MSA tool.",
+                    "enum": ["mafft", "clustalo", "muscle"]
+                },
+                "align_out_format": {
+                    "type": "string",
+                    "description": "Output MSA file format.",
+                    "enum": ["clustal", "emboss", "fasta", "maf", "msf", "phylip", "nexus", "stockholm"],
+                    "default": "fasta"
+                }
+            }
+        },
+        "inference_options": {
+            "title": "Phylogenetic inference options",
+            "type": "object",
+            "properties": {
+                "inference_tool": {
+                    "type": "string",
+                    "description": "Phylogenetic inference tool.",
+                    "enum": ["fasttree", "raxml"]
+                },
+                "inference_out_format": {
+                    "type": "string",
+                    "description": "Output phylogeny file format.",
+                    "enum": ["newick", "nexus", "nexml", "phyloxml", "cdao"],
+                    "default": "newick"
+                }
+            }
+        },
+        "generic_options": {
+            "title": "Generic options",
+            "type": "object",
+            "description": "Less common options for the pipeline, typically set in a config file.",
+            "properties": {
+                "help": {
+                    "type": ["string", "boolean"],
+                    "description": "Display help text.",
+                    "hidden": true
+                },
+                "input_file": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Input file path."
+                },
+                "input_format": {
+                    "type": "string",
+                    "description": "Input file format.",
+                    "enum": ["clustal", "embl", "emboss", "fasta", "genbank", "gb", "maf", "msf", "phylip", "nexus", "stockholm"]
+                },
+                "output_dir": {
+                    "type": "string",
+                    "format": "directory-path",
+                    "description": "Output directory."
+                },
+                "validate_params": {
+                    "type": "boolean",
+                    "description": "Boolean whether to validate parameters against the schema at runtime",
+                    "default": true,
+                    "hidden": true
+                },
+                "validationShowHiddenParams": {
+                    "type": "boolean",
+                    "description": "Show all params when using `--help`",
+                    "hidden": true
+                }
+            }
+        }
+    },
+    "allOf": [
+        {
+            "$ref": "#/definitions/fetch_options"
+        },
+        {
+            "$ref": "#/definitions/align_options"
+        },
+        {
+            "$ref": "#/definitions/inference_options"
+        },
+        {
+            "$ref": "#/definitions/generic_options"
+        }
+    ]
+}

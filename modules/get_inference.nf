@@ -13,33 +13,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-nextflowVersion = '!>=22.11'
+process GET_INFERENCE {
+    tag "$file_path"
+    publishDir "${params.output_dir}/inference", mode: 'copy', overwrite: false
 
-plugins {
-    id 'nf-validation@1.1.3'
-}
+    input:
+        tuple path(file_path), val(file_format)
 
-params {
-    query = ""
-    species = ""
-    seq_type = ""
-    refseq = false
+    output:
+        tuple path("*_inference.${params.inference_out_format}"), val("${params.inference_out_format}")
 
-    cluster_tool = ""
-
-    align_tool = ""
-    align_out_format = "fasta"
-
-    inference_tool = ""
-    inference_out_format = "newick"
-
-    help = false
-    input_file = ""
-    input_format = ""
-    output_dir = "${launchDir}/output"
-    validate_params = true
-}
-
-trace {
-    fields = 'task_id,name,process,hash,status,exit,attempt,submit,time,realtime,cpus,%cpu,memory,%mem'
+    shell:
+        '''
+        get_inference -t !{params.inference_tool} -i !{file_path} --informat !{file_format} \
+            --outformat !{params.inference_out_format}
+        '''
 }

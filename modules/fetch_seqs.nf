@@ -14,16 +14,16 @@
 // limitations under the License.
 
 process FETCH_SEQS {
-    publishDir "./data/${params.output_name}/fetch", mode: 'copy', overwrite: false
+    publishDir "${params.output_dir}/fetch", mode: 'copy', overwrite: false
 
     input:
         val query
 
     output:
-        path "${params.output_name}.gb"
+        tuple path('output.gb'), val('genbank')
 
     shell:
         '''
-        fetch_genbank_seqs -q !{query} -o !{params.output_name}
+        fetch_genbank_seqs -q !{query} -o ./
         '''
 }
