@@ -13,6 +13,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/** 1) Sequence fetching stage
+ *
+ * This first stage of the workflow aims to fetch all the reference mtDNA sequences (RefSeq)
+ * in GenBank for the tick genus Ixodes
+ *
+ * We analyse the sequences downloaded to get basic stats using the statistics function.
+ * It returns the total number of sequences stored and the arithmetic mean of the array elements of the sequences, 
+ * standard deviation of the length of the sequences, minimum and maximum values of their length.
+ *
+ * Finally, all the information can be saved in a file with the SeqRecord objects in a GENBANK format.
+**/
+
 process FETCH_SEQS {
     publishDir "${params.output_dir}/fetch", mode: 'copy', overwrite: true
 

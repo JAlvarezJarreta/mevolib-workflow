@@ -13,6 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/** 2) Clustering stage
+ *
+ * This second stage of the workflow aims to divide the sequences into genes (some genes are highly
+ * conserved within the same genus and can be used to find those sequences of dubious quality).
+ *
+**/
+
 process GET_GENES {
     tag "$file_path"
     publishDir "${params.output_dir}/cluster", mode: 'copy', overwrite: true

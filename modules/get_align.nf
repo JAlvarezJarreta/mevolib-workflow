@@ -13,6 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/** 3) Alignment stage
+ *
+ * This third stage of the workflow aims to align the genes using the given alignment tool and arguments.
+ *
+ * The resultant alignment is returned as a Bio.Align.MultipleSeqAlign object and saved in the output
+ * file (if provided).
+**/
+
 process GET_ALIGN {
     tag "$file_path"
     publishDir "${params.output_dir}/alignments", mode: 'copy', overwrite: true
