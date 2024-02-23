@@ -13,6 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/** 4) Phylogenetic inference stage
+ *
+ * Infer the phylogenetic relationship of the aligned sequences.
+**/
+
 process GET_INFERENCE {
     tag "$file_path"
     publishDir "${params.output_dir}/inference", mode: 'copy', overwrite: true
