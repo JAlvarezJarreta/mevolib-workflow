@@ -14,7 +14,7 @@
 // limitations under the License.
 
 process FETCH_SEQS {
-    publishDir "${params.output_dir}/fetch", mode: 'copy', overwrite: false
+    publishDir "${params.output_dir}/fetch", mode: 'copy', overwrite: true
 
     input:
         val query

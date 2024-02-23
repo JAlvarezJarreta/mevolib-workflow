@@ -15,7 +15,7 @@
 
 process GET_INFERENCE {
     tag "$file_path"
-    publishDir "${params.output_dir}/inference", mode: 'copy', overwrite: false
+    publishDir "${params.output_dir}/inference", mode: 'copy', overwrite: true
 
     input:
         tuple path(file_path), val(file_format)

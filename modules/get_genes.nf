@@ -15,7 +15,7 @@
 
 process GET_GENES {
     tag "$file_path"
-    publishDir "${params.output_dir}/cluster", mode: 'copy', overwrite: false
+    publishDir "${params.output_dir}/cluster", mode: 'copy', overwrite: true
 
     input:
         tuple path(file_path), val(file_format)
