@@ -26,6 +26,7 @@ process GET_INFERENCE {
     shell:
         '''
         get_inference -t !{params.inference_tool} -i !{file_path} --informat !{file_format} \
-            --outformat !{params.inference_out_format}
+            --args !{params.inference_args} --outformat !{params.inference_out_format} \
+            --bootstraps !{params.inference_bootstraps}
         '''
 }

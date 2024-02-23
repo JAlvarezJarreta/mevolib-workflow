@@ -47,6 +47,11 @@
                     "description": "MSA tool.",
                     "enum": ["mafft", "clustalo", "muscle"]
                 },
+                "align_args": {
+                    "type": "string",
+                    "description": "Arguments (or keyword) to use for the MSA tool.",
+                    "default": "default"
+                },
                 "align_out_format": {
                     "type": "string",
                     "description": "Output MSA file format.",
@@ -64,11 +69,22 @@
                     "description": "Phylogenetic inference tool.",
                     "enum": ["fasttree", "raxml"]
                 },
+                "inference_args": {
+                    "type": "string",
+                    "description": "Arguments (or keyword) to use for the phylogenetic inference tool.",
+                    "default": "default"
+                },
                 "inference_out_format": {
                     "type": "string",
                     "description": "Output phylogeny file format.",
                     "enum": ["newick", "nexus", "nexml", "phyloxml", "cdao"],
                     "default": "newick"
+                },
+                "inference_bootstraps": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "description": "Inference bootstraps",
+                    "default": 200
                 }
             }
         },

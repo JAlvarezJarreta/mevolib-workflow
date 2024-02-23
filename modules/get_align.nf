@@ -26,6 +26,6 @@ process GET_ALIGN {
     shell:
         '''
         get_align -t !{params.align_tool} -i !{file_path} --informat !{file_format} \
-            --outformat !{params.align_out_format}
+            --args !{params.align_args} --outformat !{params.align_out_format}
         '''
 }
