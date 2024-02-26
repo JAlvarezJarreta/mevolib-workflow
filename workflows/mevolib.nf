@@ -60,7 +60,7 @@ workflow MEVOLIB {
         seqs_ch = file_ch
             .combine(format_ch)
     } else {
-        query_ch = Channel.value(entrez_query).view()
+        query_ch = Channel.value(entrez_query)
         seqs_ch = FETCH_SEQS(query_ch)
     }
 
