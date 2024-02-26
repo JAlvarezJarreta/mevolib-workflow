@@ -32,10 +32,14 @@ process FETCH_SEQS {
         val query
 
     output:
-        tuple path('output.gb'), val('genbank')
+        tuple path('sequences.gb'), val('genbank')
 
-    shell:
-        '''
-        fetch_genbank_seqs -q !{query} -o ./
-        '''
+    script:
+        extra_args = ''
+        if (params.max_seqs) {
+            extra_args = "--max_seqs ${params.max_seqs}"
+        }
+        """
+        fetch_genbank_seqs -q ${query} -o sequences ${extra_args}
+        """
 }

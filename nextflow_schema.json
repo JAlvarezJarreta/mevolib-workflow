@@ -24,6 +24,11 @@
                     "type": "boolean",
                     "description": "Fetch only reference sequences.",
                     "default": false
+                },
+                "max_seqs": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "description": "Maximum number of sequences to fetch"
                 }
             }
         },
