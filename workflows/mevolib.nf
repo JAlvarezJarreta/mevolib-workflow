@@ -65,8 +65,9 @@ workflow MEVOLIB {
     }
 
     if (params.cluster_tool) {
-        // Since seqs_ch will only have one value, we can assign the output directly to the same channel
-        seqs_ch = GET_GENES(seqs_ch)
+        GET_GENES(seqs_ch)
+        seqs_ch = GET_GENES.out
+            .transpose()
     }
 
     if (params.align_tool) {
