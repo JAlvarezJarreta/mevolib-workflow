@@ -60,7 +60,10 @@
                 "align_out_format": {
                     "type": "string",
                     "description": "Output MSA file format.",
-                    "enum": ["clustal", "emboss", "fasta", "maf", "msf", "phylip", "nexus", "stockholm"],
+                    "enum": [
+                        "clustal", "emboss", "fasta", "fasta-m10", "ig", "maf", "mauve", "msf", "nexus",
+                        "phylip", "phylip-sequential", "phylip-relaxed", "stockholm"
+                    ],
                     "default": "fasta"
                 }
             }
@@ -111,7 +114,14 @@
                 "input_format": {
                     "type": "string",
                     "description": "Input file format.",
-                    "enum": ["clustal", "embl", "emboss", "fasta", "genbank", "gb", "maf", "msf", "phylip", "nexus", "stockholm"]
+                    "enum": [
+                        "abi-trim", "abi", "ace", "cif-atom", "cif-seqres", "clustal", "embl", "emboss",
+                        "fasta-2line", "fasta-m10", "fasta", "fastq-illumina", "fastq-sanger", "fastq",
+                        "fastq-solexa", "gck", "genbank", "gb", "ig", "imgt", "maf", "mauve", "msf", "nexus",
+                        "pdb-atom", "pdb-seqres", "phd", "phylip-relaxed", "phylip-sequential", "phylip",
+                        "pir", "qual", "seqxml", "sff-trim", "sff", "snapgene", "stockholm", "swiss", "tab",
+                        "uniprot-xml", "xdna"
+                    ]
                 },
                 "output_dir": {
                     "type": "string",
