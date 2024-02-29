@@ -61,8 +61,8 @@
                     "type": "string",
                     "description": "Output MSA file format.",
                     "enum": [
-                        "clustal", "emboss", "fasta", "fasta-m10", "ig", "maf", "mauve", "msf", "nexus",
-                        "phylip", "phylip-sequential", "phylip-relaxed", "stockholm"
+                        "fasta", "clustal", "maf", "mauve", "nexus", "phylip", "phylip-sequential",
+                        "phylip-relaxed", "stockholm"
                     ],
                     "default": "fasta"
                 }
@@ -85,7 +85,7 @@
                 "inference_out_format": {
                     "type": "string",
                     "description": "Output phylogeny file format.",
-                    "enum": ["newick", "nexus", "nexml", "phyloxml", "cdao"],
+                    "enum": ["newick", "nexus", "nexml", "phyloxml"],
                     "default": "newick"
                 },
                 "inference_bootstraps": {
@@ -115,12 +115,8 @@
                     "type": "string",
                     "description": "Input file format.",
                     "enum": [
-                        "abi-trim", "abi", "ace", "cif-atom", "cif-seqres", "clustal", "embl", "emboss",
-                        "fasta-2line", "fasta-m10", "fasta", "fastq-illumina", "fastq-sanger", "fastq",
-                        "fastq-solexa", "gck", "genbank", "gb", "ig", "imgt", "maf", "mauve", "msf", "nexus",
-                        "pdb-atom", "pdb-seqres", "phd", "phylip-relaxed", "phylip-sequential", "phylip",
-                        "pir", "qual", "seqxml", "sff-trim", "sff", "snapgene", "stockholm", "swiss", "tab",
-                        "uniprot-xml", "xdna"
+                        "embl", "fasta", "fastq", "fastq-illumina", "fastq-sanger", "fastq-solexa", "gb",
+                        "genbank"
                     ]
                 },
                 "output_dir": {
