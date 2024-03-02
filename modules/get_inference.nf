@@ -13,27 +13,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** 3) Alignment stage
+/** 4) Phylogenetic inference stage
  *
- * This third stage of the workflow aims to align the genes using the given alignment tool and arguments.
- *
- * The resultant alignment is returned as a Bio.Align.MultipleSeqAlign object and saved in the output
- * file (if provided).
+ * Infer the phylogenetic relationship of the aligned sequences.
 **/
 
-process GET_ALIGN {
+process GET_INFERENCE {
     tag "$file_path"
-    publishDir "${params.output_dir}/alignments", mode: 'copy', overwrite: true
+    publishDir "${params.output_dir}/inference", mode: 'copy', overwrite: true
 
     input:
         tuple path(file_path), val(file_format)
 
     output:
-        tuple path("*_aligned.${params.align_out_format}"), val("${params.align_out_format}")
+        tuple path("*_inference.${params.inference_out_format}"), val("${params.inference_out_format}")
 
     shell:
         '''
-        get_align -t !{params.align_tool} -i !{file_path} --informat !{file_format} \
-            --args !{params.align_args} --outformat !{params.align_out_format}
+        get_inference -t !{params.inference_tool} -i !{file_path} --informat !{file_format} \
+            --args !{params.inference_args} --outformat !{params.inference_out_format} \
+            --bootstraps !{params.inference_bootstraps}
         '''
 }
