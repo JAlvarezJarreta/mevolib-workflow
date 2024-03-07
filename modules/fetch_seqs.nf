@@ -26,6 +26,7 @@
 **/
 
 process FETCH_SEQS {
+    tag "$query"
     publishDir "${params.output_dir}/fetch", mode: 'copy', overwrite: true
 
     input:

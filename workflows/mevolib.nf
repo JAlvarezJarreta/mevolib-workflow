@@ -55,6 +55,7 @@ include { GET_INFERENCE } from '../modules/get_inference.nf'
 // Named workflow for pipeline
 workflow MEVOLIB {
     if (params.input_file) {
+        file(params.input_file).copyTo("${params.output_dir}/input_file")
         file_ch = Channel.fromPath(params.input_file)
         format_ch = Channel.value(params.input_format)
         seqs_ch = file_ch
