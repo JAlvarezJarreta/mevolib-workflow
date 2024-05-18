@@ -14,6 +14,7 @@
 // limitations under the License.
 
 include { validateParameters; paramsHelp; paramsSummaryLog } from 'plugin/nf-validation'
+include { read_json } from '../modules/utils/utils.nf'
 
 // Print help message, supply typical command line usage for the pipeline
 if (params.help) {
@@ -26,6 +27,11 @@ validateParameters()
 
 // Print summary of supplied parameters
 log.info paramsSummaryLog(workflow)
+
+// Import coeffcients JSONs to prepare the profiling
+params.cpu_json = read_json("./profiling/cpu_coefs.json")
+params.elapsed_time_json = read_json("./profiling/elapsed_time_coefs.json")
+params.memory_json = read_json("./profiling/memory_coefs.json")
 
 // Parse parameters further
 if (params.query) {
@@ -54,8 +60,8 @@ include { GET_INFERENCE } from '../modules/get_inference.nf'
 
 // Named workflow for pipeline
 workflow MEVOLIB {
+    
     if (params.input_file) {
-        file(params.input_file).copyTo("${params.output_dir}/input_file")
         file_ch = Channel.fromPath(params.input_file)
         format_ch = Channel.value(params.input_format)
         seqs_ch = file_ch
@@ -66,6 +72,7 @@ workflow MEVOLIB {
     }
 
     if (params.cluster_tool) {
+
         GET_GENES(seqs_ch)
         seqs_ch = GET_GENES.out
             .transpose()
